@@ -29,15 +29,29 @@ RUN chmod +x /usr/local/bin/isolate
 # Set up Isolate's configuration file (ensure cgroup v2 location is correct)
 # Add any specific Isolate configuration here, if needed
 
-# Optional: Disable swap for reproducibility
-RUN swapoff -a
-
 # Create the UID and GID range for sandboxes
 RUN groupadd -g 60000 isolate_group \
 	&& useradd -u 60000 -g isolate_group isolate_user
 
-# Add an entrypoint to run Isolate commands inside the container
-ENTRYPOINT ["/usr/local/bin/isolate"]
+# Set up compiler and interpreter environments
 
-# Set a default command, e.g., to run an isolated program
-CMD ["/bin/sh"]
+# Python Lang
+RUN apt update 
+RUN apt install -y python3 python3-pip
+
+# C Lang
+RUN apt install -y gcc
+
+# C++ Lang
+RUN apt install -y g++
+
+# Java Lang
+RUN apt install -y openjdk-17-jdk openjdk-17-jre
+
+# Go Lang
+RUN apt install -y golang-go
+
+# NodeJS Lang
+RUN apt install -y nodejs
+
+ENTRYPOINT ["/bin/sh" , "-c"]
