@@ -46,7 +46,7 @@ RUN apt install -y gcc
 RUN apt install -y g++
 
 # Java Lang
-RUN apt install -y openjdk-17-jdk openjdk-17-jre
+RUN apt install -y openjdk-17-jdk
 
 # Go Lang
 RUN apt install -y golang-go
