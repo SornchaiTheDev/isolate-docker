@@ -1,0 +1,13 @@
+[Unit]
+Description=Apply sysctl and memory settings at boot
+DefaultDependencies=no
+Before=multi-user.target
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/container-extra-config.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
