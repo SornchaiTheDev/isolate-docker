@@ -33,9 +33,6 @@ RUN rm -rf /var/lib/apt/lists/*
 COPY --from=build /isolate/isolate /usr/local/bin/isolate
 COPY --from=build /isolate/isolate-check-environment /usr/local/bin/isolate-check-environment
 COPY --from=build /isolate/isolate-cg-keeper /usr/local/bin/isolate-cg-keeper
-COPY --from=build /isolate/systemd/isolate.service /etc/systemd/system/isolate.service
-COPY --from=build /isolate/systemd/isolate.slice /etc/systemd/system/isolate.slice
-
 
 RUN chmod +x /usr/local/bin/isolate
 
@@ -78,10 +75,4 @@ COPY ./container-extra-config.sh /usr/local/bin/container-extra-config.sh
 
 RUN chmod +x /usr/local/bin/container-extra-config.sh
 
-COPY ./container-extra-config.service /etc/systemd/system/container-extra-config.service
-
-RUN systemctl enable container-extra-config.service
-RUN systemctl enable isolate.service
-
-STOPSIGNAL SIGRTMIN+3
-CMD ["/sbin/init"]
+ENTRYPOINT ["container-extra-config.sh"]
