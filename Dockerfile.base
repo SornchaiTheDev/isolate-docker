@@ -20,13 +20,6 @@ RUN make isolate-cg-keeper
 FROM debian:bookworm-slim
 
 RUN apt update 
-RUN apt install --no-install-recommends -y libcap2 \
-build-essential  \
-libcap-dev \
-sysfsutils \
-libsystemd-dev \
-pkg-config \
-libssl-dev
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -49,27 +42,6 @@ ENV TZ=Asia/Bangkok
 RUN apt-get update && \
     apt-get install -y tzdata && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Set up compiler and interpreter environments
-
-# Python Lang
-RUN apt update 
-RUN apt install -y python3 python3-pip
-
-# C Lang
-RUN apt install -y gcc
-
-# C++ Lang
-RUN apt install -y g++
-
-# Java Lang
-RUN apt install -y openjdk-17-jdk
-
-# Go Lang
-RUN apt install -y golang-go
-
-# NodeJS Lang
-RUN apt install -y nodejs
 
 COPY ./container-extra-config.sh /usr/local/bin/container-extra-config.sh
 
